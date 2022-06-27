@@ -2,12 +2,12 @@ import './index.css'
 
 const Header = props => {
   const {score, timer, stopTimer} = props
-  if (timer === 0) {
+  if (timer === 1) {
     stopTimer()
   }
 
   return (
-    <div className="header-container">
+    <ul className="header-container">
       <div className="img-container">
         <img
           src="https://assets.ccbp.in/frontend/react-js/match-game-website-logo.png "
@@ -15,7 +15,7 @@ const Header = props => {
           className="logo-img"
         />
       </div>
-      <div className="score-container">
+      <ul className="score-container">
         <div>
           <p className="header-heading">
             score: <spam className="span-ele">{score}</spam>
@@ -30,8 +30,8 @@ const Header = props => {
           />
           <span className="span-ele">{timer} sec</span>
         </div>
-      </div>
-    </div>
+      </ul>
+    </ul>
   )
 }
 

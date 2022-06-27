@@ -18,6 +18,10 @@ class Game extends Component {
     this.timer()
   }
 
+  componentWillUnmount() {
+    this.stopTimer()
+  }
+
   generateRandomImage = () => {
     const random = Math.floor(Math.random() * 30)
     const {imagesList} = this.props
@@ -40,6 +44,7 @@ class Game extends Component {
   stopTimer = () => {
     clearInterval(this.Index)
     this.setState({
+      timer: 0,
       gameInProgress: false,
     })
   }
@@ -51,7 +56,7 @@ class Game extends Component {
   }
 
   EachButton = id => {
-    const {randomImageId, timer} = this.state
+    const {randomImageId} = this.state
     if (id === randomImageId) {
       this.setState(
         prevState => ({
@@ -78,13 +83,17 @@ class Game extends Component {
             this.EachButton(each.id)
           }
           return (
-            <li className="list-item">
+            <li key={each.id} className="list-item">
               <button
                 className="each-button"
                 type="button"
                 onClick={onClickEachButton}
               >
-                <img src={each.thumbnailUrl} alt="match" className="each-img" />
+                <img
+                  src={each.thumbnailUrl}
+                  alt="thumbnail"
+                  className="each-img"
+                />
               </button>
             </li>
           )
@@ -98,9 +107,11 @@ class Game extends Component {
     const {activeTabId, randomImage} = this.state
     return (
       <div className="flex">
-        <div>
-          <img src={randomImage} className="result-img" />
-        </div>
+        <ul>
+          <div key={randomImage} className="random-list">
+            <img src={randomImage} alt="match" className="result-img" />
+          </div>
+        </ul>
         <div className="buttons-container">
           {tabsList.map(each => {
             const onClickCategory = () => {
@@ -145,7 +156,11 @@ class Game extends Component {
           {gameInProgress ? (
             this.renderGameProgressView()
           ) : (
-            <Results score={score} onReset={this.onReset} />
+            <Results
+              score={score}
+              onReset={this.onReset}
+              stopTimer={this.stopTimer}
+            />
           )}
         </div>
       </div>

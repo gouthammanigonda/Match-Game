@@ -2,6 +2,7 @@ import './index.css'
 
 const Results = props => {
   const {score, onReset} = props
+
   return (
     <div className="bg-container2">
       <div className="div2">
@@ -10,7 +11,7 @@ const Results = props => {
           alt="trophy"
           className="trophy"
         />
-        <h1 className="result-heading">YOUR SCORE</h1>
+        <p className="result-heading">YOUR SCORE</p>
         <h1 className="result-para">{score}</h1>
         <button type="button" className="reset-button" onClick={onReset}>
           <img
