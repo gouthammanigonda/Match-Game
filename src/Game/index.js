@@ -6,15 +6,14 @@ import './index.css'
 class Game extends Component {
   state = {
     activeTabId: 'FRUIT',
-    randomImageId: '',
-    randomImage: '',
+    randomImage:
+      'https://assets.ccbp.in/frontend/react-js/match-game/orange-img.png',
     score: 0,
     gameInProgress: true,
     timer: 60,
   }
 
   componentDidMount() {
-    this.generateRandomImage()
     this.timer()
   }
 
@@ -25,10 +24,8 @@ class Game extends Component {
   generateRandomImage = () => {
     const random = Math.floor(Math.random() * 30)
     const {imagesList} = this.props
-    const randomImageId = imagesList[random].id
     const randomImage = imagesList[random].imageUrl
     this.setState({
-      randomImageId,
       randomImage,
     })
   }
@@ -56,8 +53,8 @@ class Game extends Component {
   }
 
   EachButton = id => {
-    const {randomImageId} = this.state
-    if (id === randomImageId) {
+    const {randomImage} = this.state
+    if (id === randomImage) {
       this.setState(
         prevState => ({
           score: prevState.score + 1,
@@ -69,6 +66,7 @@ class Game extends Component {
       this.setState({
         gameInProgress: false,
       })
+      clearInterval(this.Index)
     }
   }
 
@@ -80,7 +78,7 @@ class Game extends Component {
       <ul className="unordered-list">
         {activeList.map(each => {
           const onClickEachButton = () => {
-            this.EachButton(each.id)
+            this.EachButton(each.imageUrl)
           }
           return (
             <li key={each.id} className="list-item">
@@ -107,12 +105,12 @@ class Game extends Component {
     const {activeTabId, randomImage} = this.state
     return (
       <div className="flex">
-        <ul>
+        <div>
           <div key={randomImage} className="random-list">
             <img src={randomImage} alt="match" className="result-img" />
           </div>
-        </ul>
-        <div className="buttons-container">
+        </div>
+        <ul className="buttons-container">
           {tabsList.map(each => {
             const onClickCategory = () => {
               this.categoryButton(each.tabId)
@@ -122,28 +120,35 @@ class Game extends Component {
             const classname = activeBtn ? 'active' : ''
 
             return (
-              <button
-                className={`button ${classname}`}
-                type="button"
-                onClick={onClickCategory}
-              >
-                {each.displayText}
-              </button>
+              <li key={each.tabId} className="each-button-category">
+                <button
+                  className={`button ${classname}`}
+                  type="button"
+                  onClick={onClickCategory}
+                >
+                  {each.displayText}
+                </button>
+              </li>
             )
           })}
-        </div>
+        </ul>
         <div className="each-category">{this.renderItems()}</div>
       </div>
     )
   }
 
   onReset = () => {
-    this.setState({
-      activeTabId: 'FRUIT',
-      score: 0,
-      gameInProgress: true,
-      timer: 60,
-    })
+    this.setState(
+      {
+        activeTabId: 'FRUIT',
+        score: 0,
+        gameInProgress: true,
+        timer: 60,
+        randomImage:
+          'https://assets.ccbp.in/frontend/react-js/match-game/orange-img.png',
+      },
+      this.timer,
+    )
   }
 
   render() {

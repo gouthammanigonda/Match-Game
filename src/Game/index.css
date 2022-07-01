@@ -75,3 +75,7 @@ button:hover {
   border-color: #fec653;
   color: #fec653;
 }
+
+.each-button-category {
+  list-style: none;
+}

@@ -7,18 +7,18 @@ const Header = props => {
   }
 
   return (
-    <ul className="header-container">
-      <div className="img-container">
+    <ul key="ul1" className="header-container">
+      <li key="1" className="img-container">
         <img
           src="https://assets.ccbp.in/frontend/react-js/match-game-website-logo.png "
           alt="website logo"
           className="logo-img"
         />
-      </div>
-      <ul className="score-container">
+      </li>
+      <li key="2" className="score-container">
         <div>
           <p className="header-heading">
-            score: <spam className="span-ele">{score}</spam>
+            score: <span className="span-ele">{score}</span>
           </p>
         </div>
 
@@ -28,9 +28,9 @@ const Header = props => {
             alt="timer"
             className="timer"
           />
-          <span className="span-ele">{timer} sec</span>
+          <p className="span-ele">{timer} sec</p>
         </div>
-      </ul>
+      </li>
     </ul>
   )
 }
